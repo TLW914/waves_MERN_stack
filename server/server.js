@@ -28,6 +28,29 @@ const { admin } = require('./middlewares/admin');
 //              PRODUCTS
 //=================================
 
+// BY ARRIVAL DATE
+// by query string - /articles?sortBy=createdAt&order=desc&limit=4
+// BY SELL
+// by query string - /articles?sortBy=sold&order=desc&limit=4
+
+app.get('/api/product/articles', (req, res) => {
+  let order = req.query.order ? req.query.order : 'asc';
+  let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
+  let limit = req.query.limit ? parseInt(req.query.limit) : parseInt(100);
+
+  Product.find()
+    .populate('brand')
+    .populate('wood')
+    .sort([[sortBy, order]])
+    .limit(limit)
+    .exec((err, articles) => {
+      if (err) return res.status(400).send(err);
+      res.send(articles);
+    });
+});
+
+// by query string - /articles_by_id?id=5b2d3648ca6a03cd33af924c&type=
+
 app.get('/api/product/articles_by_id', (req, res) => {
   let type = req.query.type;
   let items = req.query.id;
