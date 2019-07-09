@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../util_components/Button';
 import Login from './Login';
 
-const RegisterLogin = props => {
+const RegisterLogin = () => {
   return (
     <div className="page_wrapper">
       <div className="container">
